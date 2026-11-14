@@ -1,0 +1,1095 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ODA Creative Studio | Admin Dashboard</title>
+
+<style>
+:root {
+    --primary:#5278e8;
+    --primary-dark:#365dcc;
+    --bg:#f5f8ff;
+    --text:#17233d;
+    --muted:#71809c;
+    --border:#e5ebf5;
+    --white:#fff;
+    --danger:#e34d5b;
+    --success:#1eaa78;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0}
+.topbar{background:white;border-bottom:1px solid var(--border);padding:17px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.brand{font-size:21px;font-weight:800;letter-spacing:1px}
+.brand span,.login-logo span{color:var(--primary)}
+.top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.container{max-width:1250px;margin:35px auto;padding:0 22px}
+.welcome{margin-bottom:28px}
+.welcome h1{font-size:29px;margin-bottom:8px}
+.welcome p{color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:28px}
+.stat-card,.panel{background:white;border:1px solid var(--border);border-radius:17px;padding:22px}
+.stat-card small{color:var(--muted);display:block;margin-bottom:12px}
+.stat-card strong{font-size:30px}
+.panel{margin-bottom:25px}
+.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:20px}
+.panel-heading h2{font-size:20px}
+.btn{padding:11px 17px;border-radius:10px;font-weight:700;transition:.2s}
+.btn-primary{background:var(--primary);color:white}
+.btn-primary:hover{background:var(--primary-dark)}
+.btn-light{background:#edf2ff;color:var(--primary-dark)}
+.btn-danger{background:#fff0f1;color:var(--danger)}
+.btn-success{background:#e8faf3;color:#16865f}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+
+/* NOTIFICATION BUTTON */
+.notification-btn{position:relative;background:#edf2ff;color:#365dcc;padding:11px 17px;border-radius:10px;font-weight:700}
+.notification-btn:hover{background:#dfe8ff}
+.notification-badge{position:absolute;top:-7px;right:-7px;min-width:21px;height:21px;padding:0 5px;border-radius:20px;background:#e34d5b;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid white}
+.notification-badge[hidden]{display:none}
+.request-card.highlight-new{border:2px solid var(--primary);box-shadow:0 0 0 4px rgba(82,120,232,.12);animation:highlightRequest 1.5s ease}
+@keyframes highlightRequest{
+    0%{background:#edf2ff}
+    100%{background:#fff}
+}
+
+.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.project-card{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:white}
+.project-image{width:100%;height:190px;object-fit:cover;background:#edf2fa;display:block}
+.project-content{padding:17px}
+.project-content h3{margin-bottom:8px;font-size:17px}
+.project-category{color:var(--primary);font-size:13px;margin-bottom:12px}
+.project-description{color:var(--muted);font-size:13px;line-height:1.6;min-height:40px;margin-bottom:14px}
+.project-badges{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.badge{background:#edf2ff;color:#4568ca;padding:5px 9px;border-radius:20px;font-size:11px}
+.badge-featured{background:#fff5d9;color:#a87500}
+.card-actions{display:flex;gap:7px;flex-wrap:wrap}
+.card-actions button{flex:1;min-width:75px;font-size:12px;padding:9px 7px}
+.empty-state{text-align:center;padding:45px 15px;color:var(--muted);border:1px dashed var(--border);border-radius:13px;grid-column:1/-1}
+.field{margin-bottom:17px}
+.field label{display:block;font-weight:700;font-size:13px;margin-bottom:8px}
+.field input,.field textarea,.field select{width:100%;padding:12px 13px;border:1px solid var(--border);border-radius:9px;outline:none;background:white;color:var(--text)}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--primary)}
+.field textarea{min-height:110px;resize:vertical}
+.check-row{display:flex;align-items:center;gap:9px;margin:12px 0}
+.check-row input{width:17px;height:17px}
+.modal{position:fixed;inset:0;background:rgba(15,28,55,.55);z-index:50;display:none;align-items:center;justify-content:center;padding:18px}
+.modal.active{display:flex}
+.modal-box{background:white;width:100%;max-width:680px;max-height:92vh;overflow-y:auto;border-radius:18px;padding:25px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:23px}
+.close-btn{background:#f0f3f9;width:35px;height:35px;border-radius:50%;font-size:20px}
+.preview-image{width:100%;max-height:220px;object-fit:contain;background:#f2f5fa;border-radius:10px;margin-top:10px;display:none}
+.gallery-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}
+.gallery-item{position:relative}
+.gallery-item img{width:100%;height:85px;object-fit:cover;border-radius:8px;display:block}
+.gallery-item button{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#e34d5b;color:white}
+.form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+.notice{padding:13px;border-radius:9px;background:#edf4ff;color:#365dcc;font-size:13px;line-height:1.6;margin-bottom:17px}
+.status{color:var(--muted);font-size:13px;margin-top:12px}
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{width:100%;max-width:420px;background:white;border:1px solid var(--border);border-radius:20px;padding:32px;box-shadow:0 15px 50px rgba(50,80,140,.08)}
+.login-logo{font-size:25px;font-weight:900;text-align:center;margin-bottom:10px}
+.login-box h2{text-align:center;margin:15px 0 8px}
+.login-box>p{text-align:center;color:var(--muted);font-size:13px;margin-bottom:25px}
+.login-box .btn{width:100%}
+#loginError{color:var(--danger);font-size:13px;margin-top:12px;line-height:1.5}
+#dashboardMain{display:none}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+
+/* CLIENT REQUESTS */
+.requests-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.request-card{border:1px solid var(--border);border-radius:14px;padding:18px;background:#fff;min-width:0}
+.request-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.request-top h3{font-size:17px;overflow-wrap:anywhere}
+.request-date{font-size:12px;color:var(--muted);margin-top:6px}
+.request-service{display:inline-block;background:#edf2ff;color:#4568ca;padding:6px 10px;border-radius:20px;font-size:12px;margin-bottom:12px}
+.request-info{font-size:13px;line-height:1.8;color:var(--muted);overflow-wrap:anywhere}
+.request-info strong{color:var(--text)}
+.request-message{background:#f7f9fd;border-radius:10px;padding:12px;margin:13px 0;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.request-controls{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.request-controls select{flex:1;min-width:150px;padding:10px;border:1px solid var(--border);border-radius:9px;background:white;color:var(--text)}
+.request-status{font-size:11px;padding:5px 9px;border-radius:20px;font-weight:700;white-space:nowrap}
+.status-new{background:#fff5d9;color:#a87500}
+.status-progress{background:#edf2ff;color:#4568ca}
+.status-completed{background:#e8faf3;color:#16865f}
+.request-contact{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.request-contact a{text-decoration:none;font-size:12px;font-weight:700;padding:8px 11px;border-radius:8px;background:#edf2ff;color:#365dcc}
+.request-contact a:hover{background:#dfe8ff}
+.request-count{display:flex;gap:8px;flex-wrap:wrap}
+.count-chip{background:#f2f5fb;padding:7px 11px;border-radius:9px;font-size:12px;color:var(--muted)}
+.request-error{color:var(--danger);font-size:13px;margin-top:12px}
+#requestsPanel{display:none}
+
+@media(max-width:850px){
+.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.requests-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+.stats{grid-template-columns:1fr}
+.project-grid{grid-template-columns:1fr}
+.welcome h1{font-size:24px}
+.topbar{padding:15px 4%}
+.container{padding:0 14px}
+.modal-box{padding:18px}
+}
+</style>
+</head>
+
+<body>
+
+<section id="loginScreen">
+    <div class="login-box">
+        <div class="login-logo">ODA <span>CREATIVE</span></div>
+        <h2>Welcome Back</h2>
+        <p>Sign in to manage your creative portfolio.</p>
+        <form id="loginForm">
+            <div class="field">
+                <label>Email Address</label>
+                <input id="loginEmail" type="email" required autocomplete="username" placeholder="Admin email">
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input id="loginPassword" type="password" required autocomplete="current-password" placeholder="Your password">
+            </div>
+            <button class="btn btn-primary" id="loginButton" type="submit">Sign In</button>
+            <div id="loginError"></div>
+        </form>
+    </div>
+</section>
+
+<div id="dashboardMain">
+<header class="topbar">
+    <div class="brand">ODA <span>CREATIVE STUDIO</span></div>
+    <div class="top-actions">
+        <button class="notification-btn" id="newRequestsButton" type="button" style="display:none">
+            🔔 New Requests
+            <span class="notification-badge" id="newRequestsBadge" hidden>0</span>
+        </button>
+        <button class="btn btn-light" id="refreshButton">Refresh</button>
+        <button class="btn btn-danger" id="signOutButton">Sign Out</button>
+    </div>
+</header>
+
+<main class="container">
+    <section class="welcome">
+        <h1>Dashboard Overview</h1>
+        <p>Manage your projects and creative portfolio.</p>
+    </section>
+
+    <section class="stats">
+        <div class="stat-card"><small>Total Projects</small><strong id="totalProjects">0</strong></div>
+        <div class="stat-card"><small>Featured Projects</small><strong id="featuredProjects">0</strong></div>
+        <div class="stat-card"><small>Published Projects</small><strong id="publishedProjects">0</strong></div>
+    </section>
+
+    <!-- CLIENT REQUESTS PANEL -->
+    <section class="panel" id="requestsPanel">
+        <div class="panel-heading">
+            <div>
+                <h2>Client Requests</h2>
+                <p class="status">Review incoming project inquiries and manage their status.</p>
+            </div>
+            <button class="btn btn-primary" id="refreshRequestsButton">↻ Refresh Requests</button>
+        </div>
+
+        <div class="request-count">
+            <span class="count-chip">Total: <strong id="totalRequests">0</strong></span>
+            <span class="count-chip">New: <strong id="newRequests">0</strong></span>
+            <span class="count-chip">In Progress: <strong id="progressRequests">0</strong></span>
+            <span class="count-chip">Completed: <strong id="completedRequests">0</strong></span>
+        </div>
+
+        <p class="status" id="requestsStatus">Loading requests...</p>
+        <div class="request-error" id="requestsError"></div>
+        <div class="requests-grid" id="requestsGrid" style="margin-top:16px">
+            <div class="empty-state">Loading client requests...</div>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-heading">
+            <div>
+                <h2>Project Management</h2>
+                <p class="status">Create, edit, publish and organize your work.</p>
+            </div>
+            <button class="btn btn-primary" id="addProjectButton">+ Add Project</button>
+        </div>
+
+        <div class="notice">
+            Your projects are stored in Supabase. Images are uploaded to the
+            <strong>project-images</strong> storage bucket.
+        </div>
+
+        <div class="panel-heading">
+            <button class="btn btn-light" id="importOldProjectsButton">Import Old Projects</button>
+            <span class="status" id="projectStatus"></span>
+        </div>
+
+        <div class="project-grid" id="projectGrid">
+            <div class="empty-state">Loading projects...</div>
+        </div>
+    </section>
+</main>
+<footer>© ODA Creative Studio — Admin Dashboard</footer>
+</div>
+
+<!-- PROJECT EDITOR -->
+<div class="modal" id="projectModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="modalTitle">Add New Project</h2>
+            <button class="close-btn" id="closeModalButton" type="button">×</button>
+        </div>
+        <form id="projectForm">
+            <input type="hidden" id="projectId">
+            <div class="field">
+                <label>Project Name *</label>
+                <input id="projectName" required maxlength="120" placeholder="Enter project name">
+            </div>
+            <div class="field">
+                <label>Category *</label>
+                <input id="projectCategory" required maxlength="80" placeholder="e.g. Branding, Social Media, Web Design">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea id="projectDescription" placeholder="Write a project description..."></textarea>
+            </div>
+            <div class="field">
+                <label>Cover Image</label>
+                <input id="coverInput" type="file" accept="image/*">
+                <img id="coverPreview" class="preview-image" alt="Cover preview">
+                <p class="status">Leave empty to keep the current cover image when editing.</p>
+            </div>
+            <div class="field">
+                <label>Gallery Images (Maximum 8)</label>
+                <input id="galleryInput" type="file" accept="image/*" multiple>
+                <div id="galleryPreview" class="gallery-preview"></div>
+                <p class="status">Existing images are kept unless you remove them. New images are added to the gallery.</p>
+            </div>
+            <label class="check-row"><input type="checkbox" id="projectFeatured"><span>Featured Project</span></label>
+            <label class="check-row"><input type="checkbox" id="projectPublished" checked><span>Published (visible on website)</span></label>
+            <div class="form-actions">
+                <button type="button" class="btn btn-light" id="cancelModalButton">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="saveProjectButton">Save Project</button>
+            </div>
+            <p class="status" id="saveStatus"></p>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+"use strict";
+
+const supabaseClient = window.odaSupabase;
+const $ = id => document.getElementById(id);
+
+let currentUser = null;
+let projects = [];
+let clientRequests = [];
+let isAdmin = false;
+let currentCover = "";
+let currentGallery = [];
+let pendingGalleryFiles = [];
+let pendingCoverFile = null;
+let isSaving = false;
+
+function showLogin(){
+    $("loginScreen").style.display="flex";
+    $("dashboardMain").style.display="none";
+}
+
+function showDashboard(){
+    $("loginScreen").style.display="none";
+    $("dashboardMain").style.display="block";
+}
+
+function setProjectStatus(message){
+    $("projectStatus").textContent=message||"";
+}
+
+function escapeHTML(value){
+    return String(value??"").replace(/[&<>"']/g,char=>({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    })[char]);
+}
+
+/* NOTIFICATIONS */
+
+function updateNotificationBadge(){
+    const newCount=clientRequests.filter(request=>request.status==="new").length;
+    const badge=$("newRequestsBadge");
+
+    badge.textContent=newCount>99?"99+":String(newCount);
+    badge.hidden=newCount===0;
+}
+
+function openNewRequests(){
+    if(!isAdmin)return;
+
+    const panel=$("requestsPanel");
+    panel.scrollIntoView({behavior:"smooth",block:"start"});
+
+    const firstNewRequest=$("requestsGrid").querySelector('.request-card[data-new-request="true"]');
+
+    if(firstNewRequest){
+        firstNewRequest.classList.remove("highlight-new");
+        void firstNewRequest.offsetWidth;
+        firstNewRequest.classList.add("highlight-new");
+    }
+}
+
+/* ADMIN AUTHORIZATION */
+
+async function checkAdminAccess(){
+    isAdmin=false;
+    $("requestsPanel").style.display="none";
+    $("newRequestsButton").style.display="none";
+    updateNotificationBadge();
+
+    if(!currentUser) return false;
+
+    const {data,error}=await supabaseClient
+        .from("oda_admins")
+        .select("user_id")
+        .eq("user_id",currentUser.id)
+        .maybeSingle();
+
+    if(error){
+        console.error("Admin check error:",error);
+        $("requestsStatus").textContent="Could not verify administrator access.";
+        return false;
+    }
+
+    if(!data) return false;
+
+    isAdmin=true;
+    $("requestsPanel").style.display="block";
+    $("newRequestsButton").style.display="inline-flex";
+    await loadRequests();
+    return true;
+}
+
+/* CLIENT REQUESTS */
+
+function requestStatusLabel(status){
+    const labels={
+        new:"New",
+        in_progress:"In Progress",
+        completed:"Completed"
+    };
+    return labels[status]||"Unknown";
+}
+
+function requestStatusClass(status){
+    if(status==="new") return "status-new";
+    if(status==="in_progress") return "status-progress";
+    if(status==="completed") return "status-completed";
+    return "";
+}
+
+function formatRequestDate(value){
+    if(!value) return "Date unavailable";
+    const date=new Date(value);
+    if(Number.isNaN(date.getTime())) return "Date unavailable";
+    return date.toLocaleString("en-GB",{
+        year:"numeric",month:"short",day:"numeric",
+        hour:"2-digit",minute:"2-digit"
+    });
+}
+
+async function loadRequests(){
+    if(!currentUser||!isAdmin) return;
+
+    $("requestsStatus").textContent="Loading client requests...";
+    $("requestsError").textContent="";
+    $("requestsGrid").innerHTML='<div class="empty-state">Loading client requests...</div>';
+
+    const {data,error}=await supabaseClient
+        .from("client_requests")
+        .select("id, customer_name, email, phone, service, message, status, created_at")
+        .order("created_at",{ascending:false});
+
+    if(error){
+        console.error("Requests loading error:",error);
+        $("requestsStatus").textContent="Could not load requests.";
+        $("requestsError").textContent=error.message;
+        $("requestsGrid").innerHTML='<div class="empty-state">Unable to load requests. Please refresh.</div>';
+        return;
+    }
+
+    clientRequests=data||[];
+    renderRequests();
+}
+
+function renderRequests(){
+    const total=clientRequests.length;
+    const newCount=clientRequests.filter(r=>r.status==="new").length;
+    const progressCount=clientRequests.filter(r=>r.status==="in_progress").length;
+    const completedCount=clientRequests.filter(r=>r.status==="completed").length;
+
+    $("totalRequests").textContent=total;
+    $("newRequests").textContent=newCount;
+    $("progressRequests").textContent=progressCount;
+    $("completedRequests").textContent=completedCount;
+    $("requestsStatus").textContent=total+" request(s) found.";
+
+    updateNotificationBadge();
+
+    const grid=$("requestsGrid");
+
+    if(!total){
+        grid.innerHTML=`
+            <div class="empty-state">
+                <h3>No Client Requests Yet</h3>
+                <p>New project inquiries submitted through your website will appear here.</p>
+            </div>`;
+        return;
+    }
+
+    grid.innerHTML=clientRequests.map(request=>{
+        const phone=String(request.phone||"");
+        const email=String(request.email||"");
+        const safePhone=phone.replace(/[^\d+]/g,"");
+
+        return `
+        <article class="request-card" data-new-request="${request.status==="new"?"true":"false"}">
+            <div class="request-top">
+                <div>
+                    <h3>${escapeHTML(request.customer_name)}</h3>
+                    <div class="request-date">${escapeHTML(formatRequestDate(request.created_at))}</div>
+                </div>
+                <span class="request-status ${requestStatusClass(request.status)}">
+                    ${escapeHTML(requestStatusLabel(request.status))}
+                </span>
+            </div>
+
+            <div class="request-service">${escapeHTML(request.service||"Service not specified")}</div>
+
+            <div class="request-info">
+                <div><strong>Phone:</strong> ${escapeHTML(phone||"Not provided")}</div>
+                <div><strong>Email:</strong> ${escapeHTML(email||"Not provided")}</div>
+            </div>
+
+            <div class="request-message">${escapeHTML(request.message||"No additional message.")}</div>
+
+            <div class="request-controls">
+                <select aria-label="Request status" data-request-status="${escapeHTML(request.id)}">
+                    <option value="new" ${request.status==="new"?"selected":""}>New</option>
+                    <option value="in_progress" ${request.status==="in_progress"?"selected":""}>In Progress</option>
+                    <option value="completed" ${request.status==="completed"?"selected":""}>Completed</option>
+                </select>
+                <button class="btn btn-primary" data-save-request="${escapeHTML(request.id)}">Save Status</button>
+            </div>
+
+            <div class="request-contact">
+                ${safePhone?`<a href="tel:${escapeHTML(safePhone)}">Call Customer</a>`:""}
+                ${email?`<a href="mailto:${escapeHTML(email)}">Send Email</a>`:""}
+            </div>
+        </article>`;
+    }).join("");
+}
+
+async function updateRequestStatus(id){
+    if(!isAdmin||!currentUser) return;
+
+    const select=document.querySelector(`[data-request-status="${CSS.escape(id)}"]`);
+    if(!select) return;
+
+    const status=select.value;
+    const allowed=["new","in_progress","completed"];
+
+    if(!allowed.includes(status)){
+        alert("Invalid request status.");
+        return;
+    }
+
+    const button=document.querySelector(`[data-save-request="${CSS.escape(id)}"]`);
+    if(button){
+        button.disabled=true;
+        button.textContent="Saving...";
+    }
+
+    const {error}=await supabaseClient
+        .from("client_requests")
+        .update({status})
+        .eq("id",id);
+
+    if(error){
+        console.error(error);
+        alert("Could not update request: "+error.message);
+        if(button){
+            button.disabled=false;
+            button.textContent="Save Status";
+        }
+        return;
+    }
+
+    const request=clientRequests.find(r=>r.id===id);
+    if(request) request.status=status;
+
+    renderRequests();
+}
+
+$("requestsGrid").addEventListener("click",event=>{
+    const button=event.target.closest("[data-save-request]");
+    if(button){
+        updateRequestStatus(button.dataset.saveRequest);
+    }
+});
+
+$("refreshRequestsButton").addEventListener("click",loadRequests);
+$("newRequestsButton").addEventListener("click",openNewRequests);
+
+/* PROJECT MANAGEMENT */
+
+async function loadProjects(){
+    if(!currentUser) return;
+
+    setProjectStatus("Loading projects...");
+
+    const {data,error}=await supabaseClient
+        .from("projects")
+        .select("*")
+        .eq("owner_id",currentUser.id)
+        .order("sort_order",{ascending:true})
+        .order("created_at",{ascending:false});
+
+    if(error){
+        console.error(error);
+        setProjectStatus("Could not load projects: "+error.message);
+        return;
+    }
+
+    projects=data||[];
+    renderProjects();
+    setProjectStatus(projects.length+" project(s) loaded.");
+}
+
+function renderProjects(){
+    $("totalProjects").textContent=projects.length;
+    $("featuredProjects").textContent=projects.filter(p=>p.featured).length;
+    $("publishedProjects").textContent=projects.filter(p=>p.published).length;
+
+    const grid=$("projectGrid");
+
+    if(!projects.length){
+        grid.innerHTML=`
+            <div class="empty-state">
+                <h3>No Projects Yet</h3>
+                <p>Add your first project to start building your portfolio.</p>
+            </div>`;
+        return;
+    }
+
+    grid.innerHTML=projects.map(project=>{
+        const image=project.image_url||"";
+        const badges=[
+            project.featured?'<span class="badge badge-featured">Featured</span>':"",
+            project.published?'<span class="badge">Published</span>':'<span class="badge">Draft</span>'
+        ].join("");
+
+        return `
+        <article class="project-card">
+            <img class="project-image" src="${escapeHTML(image)}"
+                alt="${escapeHTML(project.name)}"
+                onerror="this.style.visibility='hidden'">
+            <div class="project-content">
+                <div class="project-badges">${badges}</div>
+                <h3>${escapeHTML(project.name)}</h3>
+                <div class="project-category">${escapeHTML(project.category)}</div>
+                <p class="project-description">${escapeHTML(project.description||"No description added.")}</p>
+                <div class="card-actions">
+                    <button class="btn btn-light" onclick="editProject('${project.id}')">Edit</button>
+                    <button class="btn btn-light" onclick="toggleFeatured('${project.id}')">
+                        ${project.featured?"Unfeature":"Feature"}
+                    </button>
+                    <button class="btn btn-danger" onclick="deleteProject('${project.id}')">Delete</button>
+                </div>
+            </div>
+        </article>`;
+    }).join("");
+}
+
+function openEditor(){
+    $("projectForm").reset();
+    $("projectId").value="";
+    $("modalTitle").textContent="Add New Project";
+    $("saveProjectButton").textContent="Save Project";
+    $("saveStatus").textContent="";
+
+    currentCover="";
+    currentGallery=[];
+    pendingGalleryFiles=[];
+    pendingCoverFile=null;
+
+    $("coverPreview").src="";
+    $("coverPreview").style.display="none";
+    $("galleryPreview").innerHTML="";
+    $("projectPublished").checked=true;
+
+    $("projectModal").classList.add("active");
+}
+
+function closeEditor(){
+    if(isSaving)return;
+    $("projectModal").classList.remove("active");
+}
+
+function editProject(id){
+    const project=projects.find(p=>p.id===id);
+    if(!project)return;
+
+    openEditor();
+
+    $("modalTitle").textContent="Edit Project";
+    $("saveProjectButton").textContent="Update Project";
+    $("projectId").value=project.id;
+    $("projectName").value=project.name||"";
+    $("projectCategory").value=project.category||"";
+    $("projectDescription").value=project.description||"";
+    $("projectFeatured").checked=!!project.featured;
+    $("projectPublished").checked=!!project.published;
+
+    currentCover=project.image_url||"";
+    currentGallery=Array.isArray(project.images)?[...project.images]:[];
+
+    if(currentCover){
+        $("coverPreview").src=currentCover;
+        $("coverPreview").style.display="block";
+    }
+
+    renderGalleryPreview();
+}
+
+function renderGalleryPreview(){
+    const gallery=$("galleryPreview");
+
+    gallery.innerHTML=currentGallery.map((item,index)=>{
+        const url=typeof item==="string"?item:item.preview;
+        return `
+        <div class="gallery-item">
+            <img src="${escapeHTML(url)}" alt="Gallery image">
+            <button type="button" onclick="removeGalleryImage(${index})">×</button>
+        </div>`;
+    }).join("");
+
+    pendingGalleryFiles.forEach((file,index)=>{
+        const url=URL.createObjectURL(file);
+        const wrapper=document.createElement("div");
+        wrapper.className="gallery-item";
+
+        const img=document.createElement("img");
+        img.src=url;
+        img.alt="New gallery image";
+
+        const button=document.createElement("button");
+        button.type="button";
+        button.textContent="×";
+        button.addEventListener("click",()=>{
+            pendingGalleryFiles.splice(index,1);
+            renderGalleryPreview();
+        });
+
+        wrapper.append(img,button);
+        gallery.appendChild(wrapper);
+    });
+}
+
+function removeGalleryImage(index){
+    currentGallery.splice(index,1);
+    renderGalleryPreview();
+}
+
+$("coverInput").addEventListener("change",event=>{
+    const file=event.target.files[0];
+    if(!file)return;
+
+    pendingCoverFile=file;
+    $("coverPreview").src=URL.createObjectURL(file);
+    $("coverPreview").style.display="block";
+});
+
+$("galleryInput").addEventListener("change",event=>{
+    const files=Array.from(event.target.files||[]);
+    const remaining=8-currentGallery.length-pendingGalleryFiles.length;
+
+    if(files.length>remaining)alert("You can add a maximum of 8 gallery images.");
+
+    pendingGalleryFiles.push(...files.slice(0,Math.max(0,remaining)));
+    event.target.value="";
+    renderGalleryPreview();
+});
+
+async function compressImage(file){
+    if(!file||!file.type.startsWith("image/"))throw new Error("Please select a valid image.");
+    if(file.type==="image/svg+xml"||file.type==="image/gif")return file;
+
+    const imageUrl=URL.createObjectURL(file);
+
+    try{
+        const image=new Image();
+        await new Promise((resolve,reject)=>{
+            image.onload=resolve;
+            image.onerror=reject;
+            image.src=imageUrl;
+        });
+
+        const maxSize=1800;
+        const ratio=Math.min(1,maxSize/Math.max(image.width,image.height));
+        const canvas=document.createElement("canvas");
+        canvas.width=Math.round(image.width*ratio);
+        canvas.height=Math.round(image.height*ratio);
+
+        const context=canvas.getContext("2d");
+        context.drawImage(image,0,0,canvas.width,canvas.height);
+
+        const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",0.86));
+        if(!blob)throw new Error("Image compression failed.");
+        return blob;
+    }finally{
+        URL.revokeObjectURL(imageUrl);
+    }
+}
+
+async function uploadImage(file){
+    const compressed=await compressImage(file);
+    const extension=file.type==="image/svg+xml"?"svg":file.type==="image/gif"?"gif":"jpg";
+    const filePath=`${currentUser.id}/${crypto.randomUUID()}.${extension}`;
+
+    const {error:uploadError}=await supabaseClient.storage
+        .from("project-images")
+        .upload(filePath,compressed,{
+            contentType:compressed.type||file.type,
+            upsert:false
+        });
+
+    if(uploadError)throw uploadError;
+
+    const {data}=supabaseClient.storage.from("project-images").getPublicUrl(filePath);
+    return data.publicUrl;
+}
+
+async function saveProject(event){
+    event.preventDefault();
+    if(isSaving)return;
+
+    const name=$("projectName").value.trim();
+    const category=$("projectCategory").value.trim();
+
+    if(!name||!category){
+        alert("Please enter the project name and category.");
+        return;
+    }
+    if(!currentUser){
+        alert("Please sign in again.");
+        return;
+    }
+
+    isSaving=true;
+    $("saveProjectButton").disabled=true;
+    $("saveStatus").textContent="Saving project...";
+
+    try{
+        let coverUrl=currentCover;
+
+        if(pendingCoverFile){
+            $("saveStatus").textContent="Uploading cover image...";
+            coverUrl=await uploadImage(pendingCoverFile);
+        }
+
+        const galleryUrls=currentGallery.map(item=>
+            typeof item==="string"?item:item.url
+        ).filter(Boolean);
+
+        for(let i=0;i<pendingGalleryFiles.length;i++){
+            $("saveStatus").textContent=`Uploading gallery image ${i+1} of ${pendingGalleryFiles.length}...`;
+            galleryUrls.push(await uploadImage(pendingGalleryFiles[i]));
+        }
+
+        const projectData={
+            owner_id:currentUser.id,
+            name,
+            category,
+            description:$("projectDescription").value.trim(),
+            image_url:coverUrl||null,
+            images:galleryUrls.slice(0,8),
+            featured:$("projectFeatured").checked,
+            published:$("projectPublished").checked,
+            updated_at:new Date().toISOString()
+        };
+
+        const id=$("projectId").value;
+        let result;
+
+        if(id){
+            result=await supabaseClient.from("projects")
+                .update(projectData)
+                .eq("id",id)
+                .eq("owner_id",currentUser.id);
+        }else{
+            result=await supabaseClient.from("projects").insert(projectData);
+        }
+
+        if(result.error)throw result.error;
+
+        $("saveStatus").textContent="Project saved successfully.";
+        $("projectModal").classList.remove("active");
+        await loadProjects();
+
+    }catch(error){
+        console.error(error);
+        $("saveStatus").textContent="Error: "+error.message;
+        alert("Could not save the project:\n"+error.message);
+    }finally{
+        isSaving=false;
+        $("saveProjectButton").disabled=false;
+    }
+}
+
+async function toggleFeatured(id){
+    const project=projects.find(p=>p.id===id);
+    if(!project)return;
+
+    const {error}=await supabaseClient.from("projects")
+        .update({featured:!project.featured,updated_at:new Date().toISOString()})
+        .eq("id",id)
+        .eq("owner_id",currentUser.id);
+
+    if(error){
+        alert("Could not update project: "+error.message);
+        return;
+    }
+    await loadProjects();
+}
+
+async function deleteProject(id){
+    const project=projects.find(p=>p.id===id);
+    if(!project)return;
+
+    if(!confirm(`Delete "${project.name}" permanently?`))return;
+
+    const {error}=await supabaseClient.from("projects")
+        .delete()
+        .eq("id",id)
+        .eq("owner_id",currentUser.id);
+
+    if(error){
+        alert("Could not delete project: "+error.message);
+        return;
+    }
+    await loadProjects();
+}
+
+/* IMPORT OLD LOCAL PROJECTS */
+
+function dataUrlToBlob(dataUrl){
+    const parts=dataUrl.split(",");
+    const mime=parts[0].match(/:(.*?);/)[1];
+    const binary=atob(parts[1]);
+    const bytes=new Uint8Array(binary.length);
+
+    for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+    return new Blob([bytes],{type:mime});
+}
+
+async function migrateLegacyImage(value){
+    if(!value||typeof value!=="string")return null;
+    if(value.startsWith("data:image/"))return await uploadImage(dataUrlToBlob(value));
+    return value;
+}
+
+async function importOldProjects(){
+    const oldData=localStorage.getItem("odaProjects");
+
+    if(!oldData){
+        alert("No old projects were found in this browser's local storage.");
+        return;
+    }
+
+    let oldProjects;
+    try{oldProjects=JSON.parse(oldData)}
+    catch{
+        alert("The old project data could not be read.");
+        return;
+    }
+
+    if(!Array.isArray(oldProjects)||oldProjects.length===0){
+        alert("There are no projects to import.");
+        return;
+    }
+
+    const confirmed=confirm(
+        `Found ${oldProjects.length} old project(s).\n\n`+
+        "This import should only be run once. It may create duplicates if repeated.\n\nContinue?"
+    );
+    if(!confirmed)return;
+
+    $("importOldProjectsButton").disabled=true;
+    let imported=0;
+    let failed=0;
+
+    try{
+        for(let i=0;i<oldProjects.length;i++){
+            const old=oldProjects[i];
+
+            try{
+                setProjectStatus(`Importing project ${i+1} of ${oldProjects.length}...`);
+
+                const oldCover=old.image_url||old.image||old.cover||"";
+                const coverUrl=await migrateLegacyImage(oldCover);
+                const oldGallery=Array.isArray(old.images)?old.images:[];
+                const galleryUrls=[];
+
+                for(const image of oldGallery){
+                    const imageValue=typeof image==="string"?image:image?.url||image?.src||"";
+                    if(!imageValue)continue;
+                    const migrated=await migrateLegacyImage(imageValue);
+                    if(migrated)galleryUrls.push(migrated);
+                }
+
+                const projectData={
+                    owner_id:currentUser.id,
+                    name:String(old.name||old.title||"Untitled Project"),
+                    category:String(old.category||"Creative Project"),
+                    description:String(old.description||""),
+                    image_url:coverUrl,
+                    images:galleryUrls.slice(0,8),
+                    featured:!!old.featured,
+                    published:old.published!==false,
+                    sort_order:Number(old.sort_order)||0
+                };
+
+                const {error}=await supabaseClient.from("projects").insert(projectData);
+                if(error)throw error;
+                imported++;
+
+            }catch(error){
+                console.error("Import failed for project:",old,error);
+                failed++;
+            }
+        }
+
+        await loadProjects();
+
+        alert(
+            `Import finished.\n\nSuccessfully imported: ${imported}\nFailed: ${failed}\n\n`+
+            "Your old local data has not been deleted."
+        );
+    }finally{
+        $("importOldProjectsButton").disabled=false;
+        setProjectStatus(`Import finished: ${imported} imported, ${failed} failed.`);
+    }
+}
+
+/* AUTHENTICATION */
+
+async function enterDashboard(user){
+    currentUser=user;
+    showDashboard();
+
+    await loadProjects();
+    await checkAdminAccess();
+}
+
+$("loginForm").addEventListener("submit",async event=>{
+    event.preventDefault();
+
+    $("loginError").textContent="";
+    $("loginButton").disabled=true;
+    $("loginButton").textContent="Signing in...";
+
+    try{
+        const email=$("loginEmail").value.trim();
+        const password=$("loginPassword").value;
+
+        const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+        if(error)throw error;
+
+        await enterDashboard(data.user);
+
+    }catch(error){
+        $("loginError").textContent=error.message||"Sign in failed.";
+    }finally{
+        $("loginButton").disabled=false;
+        $("loginButton").textContent="Sign In";
+    }
+});
+
+async function signOut(){
+    const {error}=await supabaseClient.auth.signOut();
+
+    if(error){
+        alert("Sign out failed: "+error.message);
+        return;
+    }
+
+    currentUser=null;
+    projects=[];
+    clientRequests=[];
+    isAdmin=false;
+    $("requestsPanel").style.display="none";
+    $("newRequestsButton").style.display="none";
+    updateNotificationBadge();
+    showLogin();
+}
+
+async function startDashboard(){
+    if(!supabaseClient){
+        $("loginError").textContent=
+            "Supabase configuration was not loaded. Check supabase-config.js and the script tags.";
+        return;
+    }
+
+    const {data,error}=await supabaseClient.auth.getSession();
+
+    if(error){
+        $("loginError").textContent=error.message;
+        return;
+    }
+
+    if(data.session){
+        await enterDashboard(data.session.user);
+    }else{
+        showLogin();
+    }
+
+    supabaseClient.auth.onAuthStateChange((event,session)=>{
+        if(event==="SIGNED_OUT"){
+            currentUser=null;
+            projects=[];
+            clientRequests=[];
+            isAdmin=false;
+            $("requestsPanel").style.display="none";
+            $("newRequestsButton").style.display="none";
+            updateNotificationBadge();
+            showLogin();
+        }
+    });
+}
+
+/* BUTTONS */
+
+$("addProjectButton").addEventListener("click",openEditor);
+$("closeModalButton").addEventListener("click",closeEditor);
+$("cancelModalButton").addEventListener("click",closeEditor);
+$("projectForm").addEventListener("submit",saveProject);
+$("signOutButton").addEventListener("click",signOut);
+
+$("refreshButton").addEventListener("click",async()=>{
+    await loadProjects();
+    if(isAdmin)await loadRequests();
+});
+
+$("importOldProjectsButton").addEventListener("click",importOldProjects);
+
+startDashboard();
+</script>
+
+</body>
+</html>

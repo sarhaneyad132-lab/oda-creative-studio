@@ -1,0 +1,1351 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ODA Creative Studio — Creative Design, Smart Solutions and Digital Experiences.">
+<title>ODA Creative Studio | Design. Create. Inspire.</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f8faff;
+    color: #172033;
+}
+
+/* HEADER */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: white;
+}
+
+/* ODA BRAND LOGO */
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.logo-main {
+    font-size: 31px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    color: #2563eb;
+}
+
+.logo-tagline {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #667085;
+    margin-left: 2px;
+}
+
+/* NAVIGATION */
+
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #344054;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #2563eb;
+}
+
+/* CONTACT DROPDOWN */
+
+.contact-menu {
+    position: relative;
+}
+
+.contact-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 0;
+    background: transparent;
+    border: none;
+    color: #344054;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-toggle:hover,
+.contact-toggle[aria-expanded="true"] {
+    color: #2563eb;
+}
+
+.contact-arrow {
+    font-size: 11px;
+    transition: transform 0.3s;
+}
+
+.contact-toggle[aria-expanded="true"] .contact-arrow {
+    transform: rotate(180deg);
+}
+
+.contact-options {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 205px;
+    padding: 9px;
+    background: white;
+    border: 1px solid #e8edf5;
+    border-radius: 13px;
+    box-shadow: 0 14px 35px rgba(23,32,51,0.13);
+    z-index: 1000;
+    animation: dropdownFade 0.2s ease;
+}
+
+.contact-options[hidden] {
+    display: none;
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contact-options a {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 13px 12px;
+    margin: 0;
+    border-radius: 9px;
+    color: #344054;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.contact-options a:hover {
+    background: #edf3ff;
+    color: #2563eb;
+}
+
+.contact-option-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 17px;
+}
+
+.whatsapp-option .contact-option-icon {
+    background: #e8f8ee;
+    color: #168a48;
+}
+
+.call-option .contact-option-icon {
+    background: #edf3ff;
+    color: #2563eb;
+}
+
+.contact-option-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.contact-option-text strong {
+    font-size: 13px;
+}
+
+.contact-option-text small {
+    color: #8993a5;
+    font-size: 10px;
+}
+
+/* NAVBAR CALL TO ACTION */
+
+.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: #2563eb;
+    color: white !important;
+    padding: 12px 17px;
+    border-radius: 9px;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.nav-cta:hover {
+    background: #1747b5;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(37,99,235,0.18);
+}
+
+/* HERO */
+
+.hero {
+    text-align: center;
+    padding: 110px 20px;
+    background: linear-gradient(135deg, #edf3ff, white);
+}
+
+.hero h1 {
+    font-size: 55px;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #2563eb;
+}
+
+.hero p {
+    color: #667085;
+    line-height: 1.8;
+}
+
+.btn {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 14px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 22px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #1747b5;
+    transform: translateY(-3px);
+}
+
+/* GENERAL SECTIONS */
+
+section {
+    padding: 75px 8%;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.description {
+    color: #667085;
+    margin-bottom: 40px;
+}
+
+.contact-title-highlight {
+    color: #2563eb;
+}
+
+/* PORTFOLIO TOOLS */
+
+.portfolio-tools {
+    max-width: 850px;
+    margin: 0 auto 38px;
+}
+
+.search-box {
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid #dce3ef;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    background: white;
+    transition: 0.3s;
+}
+
+.search-box:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.08);
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.filter-btn {
+    border: 1px solid #dce3ef;
+    background: white;
+    color: #475467;
+    padding: 10px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.filter-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.filter-btn.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+.results-count {
+    color: #8993a5;
+    font-size: 13px;
+    margin-top: 22px;
+}
+
+/* PROJECT CARDS */
+
+.portfolio-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.project {
+    width: 300px;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: left;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    transition: 0.3s;
+}
+
+.project:hover {
+    transform: translateY(-8px);
+}
+
+.art {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.custom {
+    background: #eaf0ff;
+    color: #2563eb;
+}
+
+.project-info {
+    padding: 25px;
+}
+
+.project-info span {
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.project-info h3 {
+    margin: 12px 0;
+}
+
+.project-info p {
+    color: #667085;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.project-link {
+    display: inline-block;
+    margin-top: 18px;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.project-link:hover {
+    text-decoration: underline;
+}
+
+/* EMPTY RESULTS */
+
+.no-results {
+    width: 100%;
+    padding: 55px 20px;
+    color: #667085;
+    background: white;
+    border-radius: 15px;
+    border: 1px dashed #dce3ef;
+}
+
+.no-results h3 {
+    color: #172033;
+    margin-bottom: 10px;
+}
+
+/* CONTACT */
+
+.contact {
+    background: #edf3ff;
+}
+
+.contact-form {
+    max-width: 650px;
+    margin: 35px auto 0;
+    padding: 35px;
+    background: white;
+    border-radius: 20px;
+    text-align: left;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #344054;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #dce3ef;
+    border-radius: 9px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    background: #fff;
+    color: #172033;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
+}
+
+.form-group textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.contact-form .btn {
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.contact-form .btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.form-status {
+    margin-top: 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* ABOUT */
+
+.about {
+    background: white;
+}
+
+.about p {
+    max-width: 650px;
+    margin: auto;
+    color: #667085;
+    line-height: 2;
+}
+
+/* FOOTER */
+
+footer {
+    background: #172033;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+/* FEATURED PROJECTS */
+
+.featured-section {
+    background: #f8faff;
+}
+
+.featured-section .section-title span {
+    color: #2563eb;
+}
+
+.featured-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.featured-card {
+    position: relative;
+}
+
+.featured-card .art {
+    position: relative;
+}
+
+.featured-label {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    padding: 7px 11px;
+    border-radius: 20px;
+    background: #2563eb;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.22);
+}
+
+/* MOBILE */
+
+@media(max-width: 700px) {
+    header {
+        flex-direction: column;
+        gap: 17px;
+        padding: 20px 5%;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 12px 16px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+    .nav-cta {
+        padding: 10px 14px;
+        font-size: 12px;
+    }
+
+    .contact-toggle {
+        font-size: 13px;
+    }
+
+    .contact-options {
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .logo-main {
+        font-size: 30px;
+    }
+
+    .hero {
+        padding: 85px 20px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .project {
+        width: 100%;
+    }
+
+    .filter-buttons {
+        gap: 8px;
+    }
+
+    .filter-btn {
+        padding: 9px 13px;
+    }
+
+    .contact-form {
+        padding: 22px;
+    }
+
+    .section-title {
+        font-size: 29px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="#home" class="logo" aria-label="ODA Creative Studio Home">
+        <span class="logo-main">ODA.</span>
+        <span class="logo-tagline">CREATIVE STUDIO</span>
+    </a>
+
+    <nav aria-label="Main Navigation">
+        <a href="#home">Home</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+
+        <!-- CONTACT DROPDOWN -->
+
+        <div class="contact-menu">
+            <button
+                type="button"
+                class="contact-toggle"
+                id="contactToggle"
+                aria-expanded="false"
+                aria-controls="contactOptions"
+            >
+                Contact
+                <span class="contact-arrow" aria-hidden="true">⌄</span>
+            </button>
+
+            <div
+                class="contact-options"
+                id="contactOptions"
+                hidden
+            >
+                <a
+                    href="https://wa.me/201041160127?text=Hello%20ODA%20Creative%20Studio%2C%20I%20would%20like%20to%20contact%20you."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="whatsapp-option"
+                >
+                    <span class="contact-option-icon">◉</span>
+                    <span class="contact-option-text">
+                        <strong>WhatsApp</strong>
+                        <small>Chat with ODA</small>
+                    </span>
+                </a>
+
+                <a
+                    href="tel:+201041160127"
+                    class="call-option"
+                >
+                    <span class="contact-option-icon">☎</span>
+                    <span class="contact-option-text">
+                        <strong>Call ODA</strong>
+                        <small>Call directly</small>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <a href="#contact" class="nav-cta">
+            Start Your Project
+            <span aria-hidden="true">→</span>
+        </a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h1>Ideas Into <span>Impact.</span></h1>
+    <p>
+        Creative Design. Smart Solutions.<br>
+        Digital Experiences.
+    </p>
+    <a href="#portfolio" class="btn">Explore Our Work</a>
+</section>
+
+<section class="featured-section" id="selectedWorks" style="display:none;">
+    <h2 class="section-title">Selected <span>Works.</span></h2>
+    <p class="description">
+        A selection of projects highlighted by ODA Creative Studio.
+    </p>
+    <div class="featured-grid" id="featuredGrid"></div>
+</section>
+
+<section id="portfolio">
+    <h2 class="section-title">Our Portfolio</h2>
+    <p class="description">
+        A collection of ideas and creative experiences.
+    </p>
+
+    <div class="portfolio-tools">
+        <input
+            type="search"
+            id="projectSearch"
+            class="search-box"
+            placeholder="Search projects by name, category or keyword..."
+            aria-label="Search projects"
+        >
+
+        <div class="filter-buttons" id="filterButtons"></div>
+
+        <p class="results-count" id="resultsCount"></p>
+    </div>
+
+    <div class="portfolio-grid" id="portfolioGrid"></div>
+</section>
+
+<!-- CLIENT REQUESTS SECTION -->
+
+<section class="contact" id="contact">
+    <h2 class="section-title">
+        Start Your Project.
+        <span class="contact-title-highlight">WITH ODA.</span>
+    </h2>
+
+    <p class="description">
+        Tell us about your idea. Let's create something meaningful together.
+    </p>
+
+    <form class="contact-form" id="clientRequestForm">
+
+        <div class="form-group">
+            <label for="customerName">Your Name *</label>
+            <input
+                type="text"
+                id="customerName"
+                name="customerName"
+                placeholder="Enter your full name"
+                minlength="2"
+                maxlength="100"
+                autocomplete="name"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="customerPhone">Phone Number *</label>
+            <input
+                type="tel"
+                id="customerPhone"
+                name="customerPhone"
+                placeholder="Your phone number"
+                minlength="5"
+                maxlength="30"
+                autocomplete="tel"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="customerEmail">Email Address</label>
+            <input
+                type="email"
+                id="customerEmail"
+                name="customerEmail"
+                placeholder="name@example.com"
+                autocomplete="email"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="requestedService">What service do you need? *</label>
+
+            <select id="requestedService" name="service" required>
+                <option value="">Select a service</option>
+                <option value="Brand Identity">Brand Identity</option>
+                <option value="Graphic Design">Graphic Design</option>
+                <option value="Social Media Design">Social Media Design</option>
+                <option value="Web Design">Web Design</option>
+                <option value="Creative Campaigns">Creative Campaigns</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="projectMessage">Tell us about your idea</label>
+
+            <textarea
+                id="projectMessage"
+                name="message"
+                placeholder="Describe your project and what you have in mind..."
+                maxlength="3000"
+            ></textarea>
+        </div>
+
+        <button type="submit" class="btn" id="submitRequest">
+            Send Project Request →
+        </button>
+
+        <p
+            class="form-status"
+            id="formStatus"
+            aria-live="polite"
+            role="status"
+        ></p>
+
+    </form>
+</section>
+
+<!-- ABOUT IS THE LAST CONTENT SECTION -->
+
+<section class="about" id="about">
+    <h2 class="section-title">About ODA</h2>
+    <p>
+        ODA Creative Studio is a creative digital space
+        focused on branding, graphic design and digital
+        experiences. We turn ideas into meaningful designs.
+    </p>
+</section>
+
+<footer>
+    © 2026 ODA Creative Studio. All Rights Reserved.
+</footer>
+
+<!-- SUPABASE CONNECTION -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+
+const fallbackProjects = [
+    {
+        name: "CENTRO",
+        category: "BRAND IDENTITY",
+        description: "A modern identity built around simplicity and confidence.",
+        image: ""
+    },
+    {
+        name: "Specialty Coffee",
+        category: "VISUAL DESIGN",
+        description: "A warm visual direction inspired by coffee culture.",
+        image: ""
+    },
+    {
+        name: "ROAST. DISTRACT. CHAT.",
+        category: "CREATIVE CAMPAIGN",
+        description: "A playful creative campaign with a distinctive style.",
+        image: ""
+    }
+];
+
+let projectsList = [];
+let activeCategory = "ALL";
+
+/* GET PROJECT IMAGE */
+
+function getProjectImage(project) {
+    if (!project) return "";
+
+    if (project.image_url) return project.image_url;
+    if (project.image) return project.image;
+
+    if (Array.isArray(project.images) && project.images.length > 0) {
+        const firstImage = project.images[0];
+
+        if (typeof firstImage === "string") return firstImage;
+        if (firstImage && firstImage.url) return firstImage.url;
+    }
+
+    return "";
+}
+
+/* LEGACY PROJECTS */
+
+function getLegacyProjects() {
+    try {
+        const saved = localStorage.getItem("odaProjects");
+
+        if (saved) {
+            const projects = JSON.parse(saved);
+
+            if (Array.isArray(projects) && projects.length > 0) {
+                return projects.map((project, index) => ({
+                    ...project,
+                    id: project.id || String(index),
+                    image_url: getProjectImage(project)
+                }));
+            }
+        }
+    } catch (error) {
+        console.error("Legacy projects error:", error);
+    }
+
+    return fallbackProjects.map((project, index) => ({
+        ...project,
+        id: String(index),
+        image_url: project.image
+    }));
+}
+
+/* REFRESH PORTFOLIO */
+
+function refreshPortfolio() {
+    renderFilters();
+    renderFeaturedProjects();
+    renderPortfolio();
+}
+
+/* LOAD PROJECTS */
+
+async function loadProjects() {
+    const grid = document.getElementById("portfolioGrid");
+
+    grid.innerHTML = `
+        <div class="no-results">
+            <h3>Loading Projects...</h3>
+            <p>Please wait while we load our creative work.</p>
+        </div>
+    `;
+
+    if (!window.odaSupabase) {
+        console.error(
+            "Supabase is not connected. Check supabase-config.js."
+        );
+
+        projectsList = getLegacyProjects();
+        refreshPortfolio();
+        return;
+    }
+
+    try {
+        const { data, error } = await window.odaSupabase
+            .from("projects")
+            .select("id, name, category, description, image_url, images, featured, sort_order, created_at")
+            .eq("published", true)
+            .order("sort_order", { ascending: true })
+            .order("created_at", { ascending: false });
+
+        if (error) {
+            throw error;
+        }
+
+        if (Array.isArray(data) && data.length > 0) {
+            projectsList = data.map(project => ({
+                ...project,
+                image_url: getProjectImage(project)
+            }));
+
+            console.log(
+                "ODA projects loaded from Supabase:",
+                projectsList.length
+            );
+        } else {
+            console.log(
+                "No published Supabase projects found. Using fallback."
+            );
+
+            projectsList = getLegacyProjects();
+        }
+
+        refreshPortfolio();
+
+    } catch (error) {
+        console.error("Supabase loading error:", error);
+
+        projectsList = getLegacyProjects();
+        refreshPortfolio();
+    }
+}
+
+/* FEATURED PROJECTS */
+
+function renderFeaturedProjects() {
+    const section = document.getElementById("selectedWorks");
+    const grid = document.getElementById("featuredGrid");
+
+    const featuredProjects = projectsList.filter(
+        project => project && project.featured === true
+    );
+
+    grid.innerHTML = "";
+
+    if (featuredProjects.length === 0) {
+        section.style.display = "none";
+        return;
+    }
+
+    section.style.display = "block";
+
+    featuredProjects.forEach(function(project) {
+        const card = document.createElement("div");
+        card.className = "project featured-card";
+
+        const art = document.createElement("div");
+        art.className = "art custom";
+
+        const badge = document.createElement("span");
+        badge.className = "featured-label";
+        badge.textContent = "★ FEATURED";
+        art.appendChild(badge);
+
+        const imageUrl = getProjectImage(project);
+
+        if (imageUrl) {
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = project.name || "ODA Featured Project";
+
+            img.onerror = function() {
+                img.remove();
+                art.appendChild(
+                    document.createTextNode(project.name || "ODA.")
+                );
+            };
+
+            art.appendChild(img);
+        } else {
+            art.appendChild(
+                document.createTextNode(project.name || "ODA.")
+            );
+        }
+
+        const info = document.createElement("div");
+        info.className = "project-info";
+
+        const category = document.createElement("span");
+        category.textContent =
+            (project.category || "CREATIVE PROJECT").toUpperCase();
+
+        const title = document.createElement("h3");
+        title.textContent = project.name || "Untitled Project";
+
+        const description = document.createElement("p");
+        description.textContent =
+            project.description || "A creative project by ODA Studio.";
+
+        const link = document.createElement("a");
+        link.href = "project.html?id=" + encodeURIComponent(project.id);
+        link.className = "project-link";
+        link.textContent = "View Project →";
+
+        info.appendChild(category);
+        info.appendChild(title);
+        info.appendChild(description);
+        info.appendChild(link);
+
+        card.appendChild(art);
+        card.appendChild(info);
+        grid.appendChild(card);
+    });
+}
+
+/* RENDER FILTERS */
+
+function renderFilters() {
+    const container = document.getElementById("filterButtons");
+    container.innerHTML = "";
+
+    const categories = [
+        ...new Set(
+            projectsList
+                .map(project =>
+                    (project.category || "CREATIVE PROJECT").trim()
+                )
+                .filter(Boolean)
+        )
+    ];
+
+    const allCategories = ["ALL", ...categories];
+
+    if (!allCategories.includes(activeCategory)) {
+        activeCategory = "ALL";
+    }
+
+    allCategories.forEach(category => {
+        const button = document.createElement("button");
+
+        button.className =
+            "filter-btn" +
+            (activeCategory === category ? " active" : "");
+
+        button.textContent =
+            category === "ALL" ? "All Projects" : category;
+
+        button.addEventListener("click", function() {
+            activeCategory = category;
+            renderFilters();
+            renderPortfolio();
+        });
+
+        container.appendChild(button);
+    });
+}
+
+/* RENDER PORTFOLIO */
+
+function renderPortfolio() {
+    const grid = document.getElementById("portfolioGrid");
+    const searchInput = document.getElementById("projectSearch");
+    const resultsCount = document.getElementById("resultsCount");
+
+    const searchTerm = searchInput.value.trim().toLowerCase();
+
+    const filteredProjects = projectsList.filter(project => {
+        const matchesCategory =
+            activeCategory === "ALL" ||
+            (project.category || "CREATIVE PROJECT").trim() === activeCategory;
+
+        const searchableText = [
+            project.name || "",
+            project.category || "",
+            project.description || ""
+        ].join(" ").toLowerCase();
+
+        return matchesCategory && searchableText.includes(searchTerm);
+    });
+
+    grid.innerHTML = "";
+
+    resultsCount.textContent =
+        "Showing " + filteredProjects.length +
+        " of " + projectsList.length + " projects";
+
+    if (filteredProjects.length === 0) {
+        const message = document.createElement("div");
+        message.className = "no-results";
+
+        const title = document.createElement("h3");
+        title.textContent = "No Projects Found";
+
+        const text = document.createElement("p");
+        text.textContent =
+            "Try another search or choose a different category.";
+
+        message.appendChild(title);
+        message.appendChild(text);
+        grid.appendChild(message);
+        return;
+    }
+
+    filteredProjects.forEach(function(project) {
+        const card = document.createElement("div");
+        card.className = "project";
+
+        const art = document.createElement("div");
+        art.className = "art custom";
+
+        const imageUrl = getProjectImage(project);
+
+        if (imageUrl) {
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = project.name || "ODA Project";
+
+            img.onerror = function() {
+                img.remove();
+                art.textContent = project.name || "ODA.";
+            };
+
+            art.appendChild(img);
+        } else {
+            art.textContent = project.name || "ODA.";
+        }
+
+        const info = document.createElement("div");
+        info.className = "project-info";
+
+        const category = document.createElement("span");
+        category.textContent =
+            (project.category || "CREATIVE PROJECT").toUpperCase();
+
+        const title = document.createElement("h3");
+        title.textContent = project.name || "Untitled Project";
+
+        const description = document.createElement("p");
+        description.textContent =
+            project.description || "A creative project by ODA Studio.";
+
+        const link = document.createElement("a");
+        link.href = "project.html?id=" + encodeURIComponent(project.id);
+        link.className = "project-link";
+        link.textContent = "View Project →";
+
+        info.appendChild(category);
+        info.appendChild(title);
+        info.appendChild(description);
+        info.appendChild(link);
+
+        card.appendChild(art);
+        card.appendChild(info);
+        grid.appendChild(card);
+    });
+}
+
+/* PORTFOLIO SEARCH */
+
+document.getElementById("projectSearch")
+    .addEventListener("input", renderPortfolio);
+
+/* LEGACY STORAGE UPDATES */
+
+window.addEventListener("storage", function(event) {
+    if (event.key === "odaProjects") {
+        loadProjects();
+    }
+});
+
+/* CONTACT DROPDOWN */
+
+const contactToggle = document.getElementById("contactToggle");
+const contactOptions = document.getElementById("contactOptions");
+
+contactToggle.addEventListener("click", function(event) {
+    event.stopPropagation();
+
+    const isOpen = !contactOptions.hidden;
+
+    contactOptions.hidden = isOpen;
+    contactToggle.setAttribute("aria-expanded", String(!isOpen));
+});
+
+document.addEventListener("click", function(event) {
+    if (!event.target.closest(".contact-menu")) {
+        contactOptions.hidden = true;
+        contactToggle.setAttribute("aria-expanded", "false");
+    }
+});
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        contactOptions.hidden = true;
+        contactToggle.setAttribute("aria-expanded", "false");
+    }
+});
+
+/* CLIENT REQUEST FORM */
+
+const requestForm = document.getElementById("clientRequestForm");
+const requestButton = document.getElementById("submitRequest");
+const formStatus = document.getElementById("formStatus");
+
+requestForm.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    if (!window.odaSupabase) {
+        formStatus.textContent =
+            "Connection error. Please try again later.";
+
+        formStatus.style.color = "#dc2626";
+        return;
+    }
+
+    const customerName =
+        document.getElementById("customerName").value.trim();
+
+    const phone =
+        document.getElementById("customerPhone").value.trim();
+
+    const email =
+        document.getElementById("customerEmail").value.trim();
+
+    const service =
+        document.getElementById("requestedService").value;
+
+    const message =
+        document.getElementById("projectMessage").value.trim();
+
+    if (
+        customerName.length < 2 ||
+        phone.length < 5 ||
+        !service
+    ) {
+        formStatus.textContent =
+            "Please complete the required fields.";
+
+        formStatus.style.color = "#dc2626";
+        return;
+    }
+
+    requestButton.disabled = true;
+    requestButton.textContent = "Sending...";
+    formStatus.textContent = "";
+
+    try {
+        const { error } = await window.odaSupabase
+            .from("client_requests")
+            .insert([{
+                customer_name: customerName,
+                phone: phone,
+                email: email || null,
+                service: service,
+                message: message || null,
+                status: "new"
+            }]);
+
+        if (error) {
+            throw error;
+        }
+
+        formStatus.textContent =
+            "Your request has been sent successfully! Thank you for choosing ODA.";
+
+        formStatus.style.color = "#16a34a";
+
+        requestForm.reset();
+
+    } catch (error) {
+        console.error("Request submission error:", error);
+
+        formStatus.textContent =
+            "Something went wrong. Please try again.";
+
+        formStatus.style.color = "#dc2626";
+
+    } finally {
+        requestButton.disabled = false;
+        requestButton.textContent = "Send Project Request →";
+    }
+});
+
+/* START LOADING PROJECTS */
+
+loadProjects();
+
+</script>
+
+</body>
+</html>
